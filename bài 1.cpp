@@ -42,7 +42,7 @@ int main() {
     for (int i = 0; i < SIZE; i++) {
         cout << colorToString( colors[i]) << " ";
     }
-//hello
+
     return 0;
 }
 
