@@ -1,77 +1,118 @@
-#include <iostream>
-#include <cmath>
-using namespace std;
+#include <stdio.h>
 
-bool SoNguyenTo(int n) {
-    if (n < 2) return false;
-    for (int i = 2; i <= sqrt(n); i++) {
-        if (n % i == 0) return false;
+#include <math.h>
+
+//ham doi gia tri
+
+void swap(int *var1, int *var2) {
+
+    int temp = *var1;
+
+    *var1 = *var2;
+
+    *var2 = temp;
+
+}
+ 
+void nhap(int n, int a[]) {
+
+    for (int i = 0; i < n; i++) {
+
+        scanf("%d", &a[i]);
+
+    } printf("\n");
+
+}
+ 
+void xuat(int n, int a[]) {
+
+    for (int i = 0; i < n; i++) {
+
+        printf("%d ", a[i]);
+
     }
-    return true;
+
+    printf("\n");
+
 }
+ 
+void tron(int a[], int b[], int c[], int n, int m) {
 
-bool SoNguyenTo4k3(int n) {
-    return SoNguyenTo(n) && (n % 4 == 3);
+	int i = 0, j = 0, k = 0;
+
+		while ((i<n)&&(j<m)) { 
+
+	   if (a[i] <= b[j]) {
+
+	   	 c[k++] = a[i++];
+
+	   } 
+
+	   else c[k++] = b[j++];
+
+	}
+
+	while (i<n) {
+
+		c[k++] = a[i++];
+
+	}
+
+	while(j<m) { c[k++] = b[j++]; 
+
+	}
+
+	xuat(n+m,c);
+
 }
-
-int* TaoMangBlum(int N, int& count) {
-    count = 0; 
-    int* blumNumbers = new int[N]; 
-    for (int p = 2; p < N; p++) {
-        if (SoNguyenTo4k3(p)) {
-            for (int q = p; q < N; q++) {
-                if (SoNguyenTo4k3(q)) {
-                    int blumNumber = p * q;
-                    if (blumNumber < N) {
-                        blumNumbers[count++] = blumNumber; 
-                    }
-                }
-            }
-        }
-    }
-
-    return blumNumbers; 
-}
-
-void TongLaBlum(int* blumNumbers, int blumCount, int N) {
-    for (int i = 0; i < blumCount; i++) {
-        for (int j = i + 1; j < blumCount; j++) {
-            int sum = blumNumbers[i] + blumNumbers[j];
-            for (int k = 0; k < blumCount; k++) {
-                if (blumNumbers[k] == sum && sum < N) {
-                    std::cout << "Cap so Blum: (" << blumNumbers[i] << ", " << blumNumbers[j] << ") co tong la " << sum << "\n";
-                    break;
-                }
-            }
-        }
-    }
-}
-
-bool LaSoBlum(int M, int* blumNumbers, int blumCount) {
-    for (int i = 0; i < blumCount; i++) {
-        if (blumNumbers[i] == M) {
-            return true;
-        }
-    }
-    return false;
-}
-
+ 
 int main() {
-    int N;
-    cin >> N;
-    int blumCount = 0;
-    int* blumNumbers = TaoMangBlum(N, blumCount);
 
-    cout << "Cac so Blum nho hon " << N << " la: ";
-    for (int i = 0; i < blumCount; i++) {
-        std::cout << blumNumbers[i] << " ";
-    }
-    cout << "\n";
-    TongLaBlum(blumNumbers, blumCount, N);
-    int M;
-    cin >> M;
-    if (LaSoBlum(M, blumNumbers, blumCount)) cout << M << " la mot so Blum.\n";
-    else cout << M << " khong phai la so Blum.\n";  
-    delete[] blumNumbers;
-    return 0;
+	int n, m; printf("Nhap n, m: ") ;scanf("%d%d", &n,&m);
+
+	int a[n], b[m], c[m+n];
+
+	printf("Nhap mang a: ");
+
+	nhap(n,a); 
+
+	printf("Nhap mang b: ");nhap(m,b);
+
+	for(int i = 0; i <n-1; i++) {
+
+		for(int j=i+1; j<n; j++) {
+
+			if (a[i] >a[j] ) {
+
+				swap(&a[i],&a[j]);
+
+			}
+
+		}
+
+	}
+
+		for(int i = 0; i <m-1; i++) {
+
+		for(int j=i+1; j<m; j++) {
+
+			if (b[i] >b[j] ) {
+
+				swap(&b[i],&b[j]);
+
+			}
+
+		}
+
+	}
+
+	printf("xuat mang a:") ; xuat(n,a);
+
+	printf("/nxuat mang b:"); xuat (m,b);
+
+printf("\nday tron: ");
+
+	tron(a,b,c,n,m);
+
 }
+ 
